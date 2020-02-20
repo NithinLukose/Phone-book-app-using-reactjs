@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useEffect} from 'react';
+import { connect } from 'react-redux'
+import AddContact from './components/addContact'
+import ShowContact from './components/showContact'
+import FilterContact from './components/filterContact'
+import Contacts from './components/contacts'
+import {initializeContacts} from './reducers/contactReducer'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const App = (props) => {
+    
+   useEffect(() => {
+       props.initializeContacts()
+   },[])
+    
+    
+    return (
+        
+        <div>
+            <FilterContact store={props.store}/>
+            <Contacts store={props.store} />
+            <AddContact store={props.store}/>
+            <ShowContact store={props.store}/>
+        </div>
+        
+    )
 }
 
-export default App;
+export default connect(null,{initializeContacts})(App);
